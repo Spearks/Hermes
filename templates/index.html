@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<div class="container">
+    {% if channels %}
+        {% for channel in channels %}
+        <div>
+            <h2>{{ channel.name }}</h2>
+
+            <p>
+                <box-icon name='component' type='solid' color='#f5f3f3' ></box-icon>
+                <a href="">
+                    {{ channel.device }}
+                </a>
+            </p>
+            
+            <div class="expand">
+                <box-icon class="icon download" name='expand-vertical' rotate='180' color='#fffafa' ></box-icon>
+                <iframe id="expand1" src="url"
+                    width="450" height="200" frameborder="0">
+                </iframe>
+            </div>
+            
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="warnings">
+            <p class="warnings channels">
+                <box-icon name='error' color='#ffffff' ></box-icon>
+                Não há canais
+            </p>
+        </div>
+        
+    {% endif %}
+
+</div>
+{% endblock main %}

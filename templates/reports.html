@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+
+<div class="container">
+
+    <div>
+        <h2>Gerar relatórios</h2>
+
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur blanditiis tempora repellat,
+            praesentium, totam vero dolore, aspernatur autem tempore ducimus veritatis eaque consectetur
+            temporibus quas. Illum, laudantium error. Laboriosam, adipisci!
+        </p>
+        
+        <ul class="list">
+
+            {% for channel in channels%}
+            <li class="list channel"> 
+                
+                <p class="list channel name">
+                    <box-icon name='report' type='solid' rotate='360' onclick="window.location.href = '/channel/{{ channel.id }}';" color='#ffffff' ></box-icon>
+                    {{ channel.name }}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgb(129, 141, 52);transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2z"></path></svg>
+                </p>
+                <p class="list channel desc">
+                    <a>{{ channel.desc }}</a>
+                    
+                </p>
+                
+            </li>   
+            {% endfor %}
+        </ul>
+        
+        <p>
+            <box-icon name='list-ul' onclick="window.location.href = '/reports/list';" class="down report" onclick="" color='#ffffff' ></box-icon>
+
+        </p>
+
+    </div>
+
+</div>
+{% endblock main %}

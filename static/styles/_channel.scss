@@ -1,0 +1,112 @@
+.chview#chview {
+    &.tittle {
+        color: white;
+        display: inline-block;
+        font-family: "Inter";
+    }
+
+    &.main {
+        @include rounded();
+        margin: 10px;
+        display: block;
+        flex-grow: 0;
+        flex-shrink: 1;
+        flex-basis: auto;
+        align-self: auto;
+        order: 0;
+    
+        padding: 20px;
+        width: 90vw;
+        height: 100%;
+        background:#121318 url('../assets/noise.png');     
+    }
+
+
+
+    &.picker {
+        height: 30em;
+        margin: 20px;
+        padding: 10px;
+        @include rounded();
+        
+        &.item {
+            width: 820px;
+            height: 4.1em;
+            color: white;
+            padding: auto;
+            display: block;
+            margin-right: 5vw;
+        }
+    }
+
+}
+
+.form {
+
+
+    &.label {
+
+    }
+    
+    &.input {
+
+        padding: 10px;
+
+        
+        border-radius: 10px;
+
+        &.points {
+            float: right;
+            width: 30px;
+
+            &.text {
+                float: right;
+                width: 40px;
+            }
+        }
+    }
+
+    &.alt {
+        padding-top: 10px;
+    }
+}
+
+.plus {
+    float: right;
+
+}
+
+.report {
+   float: left;   
+   border-radius: 10px;
+   padding: 5px;
+   background-color: #2a9d9054;  
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 40px; /* Adjust the height as needed */
+   width: 105px; /* Adjust the width as needed */
+   flex-direction: row; /* Align items vertically */
+    
+   a {
+    margin-right: 5px;
+   }
+
+   &.down {
+     
+        margin: auto;
+   }
+}
+
+.plus {
+    float: right;   
+    border-radius: 40px;
+    padding: 5px;
+    background-color: #2a9d9054;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px; /* Adjust the height as needed */
+    width: 40px; /* Adjust the width as needed */
+    flex-direction: row; /* Align items vertically */
+}

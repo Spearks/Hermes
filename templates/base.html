@@ -1,0 +1,63 @@
+{% load static %}
+
+{% block head %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <title>Dashboard Hermes</title>
+</head>
+{% endblock head %}
+
+<body>
+    {% block navbar %}
+
+    <div class="mininav">
+
+        <ul>
+            <li onclick="window.location.href = '/';">
+                <box-icon name='home-smile' type='solid' size="md" color='#ffffff' class="icon"></box-icon>
+            </li>
+
+            <li onclick="window.location.href = '/devices';">
+                <box-icon name='calculator' type='solid' color='#ffffff' class="icon"></box-icon>
+            </li>
+            
+            <li onclick="window.location.href = '/reports';">
+                <box-icon type='solid' type='solid' color='#ffffff' name='component' class="icon"></box-icon>
+            </li>
+            
+            <li onclick="window.location.href = '/system';">
+                <box-icon type='solid' type='solid' color='#ffffff' name='terminal' class="icon"></box-icon>
+            </li>
+
+            <li id="login" onclick="window.location.href = '/accounts/login';">
+                <box-icon type='solid' type='solid' color='#ffffff' name='user'  class="icon"></box-icon>
+            </li>
+        </ul>
+    </div>
+    {% endblock navbar %}
+    
+    <div class="main">
+      
+        {% block main%}
+        
+        {% endblock main %}
+     
+            <!-- <script>
+                if (window.location.pathname === '/accounts/login/') {
+                    ;
+                } else {
+                    window.location.href = '/accounts/login/';
+                }                
+            </script> -->
+   
+    </div>
+    <script src="{% static 'scripts/script.js' %}"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script
+</body>
+
+</html>

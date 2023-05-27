@@ -1,0 +1,28 @@
+.system {
+    &.desc {
+        margin-top: 2vw;
+    }
+
+    &.stauts {
+
+        &.list {
+            list-style-type: none;
+            padding: 10px;
+            
+            margin-bottom: 10px;
+
+            &.item {
+                padding: 10px;
+            }
+        }
+        display: block;
+    }
+    
+
+
+}
+
+.nginx {
+    width: 24px;
+    height: 24px;
+}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<div class="container">
+    <div>
+        <h2>Gerenciador de dispositivos</h2>
+
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur blanditiis tempora repellat,
+            praesentium, totam vero dolore, aspernatur autem tempore ducimus veritatis eaque consectetur
+            temporibus quas. Illum, laudantium error. Laboriosam, adipisci!
+        </p>
+        
+        <ul class="list">
+            {% for device in devices %}
+            <li> 
+                <p class="list device name">
+                    <box-icon name='dots-horizontal-rounded' rotate='180' color='#ffffff' ></box-icon>
+
+                    {{ device.name }}  
+                    <box-icon class="list device icon" name='circle' type='solid' color='rgba(0,255,0,0.58)' ></box-icon>
+                </p>
+                <hr class="list hr">
+
+                <p class="list device desc">
+                    <a>{{ device.ip }}</a>
+                    
+                    <a>{{ device.id }}</a>
+                </p>
+
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock main %}

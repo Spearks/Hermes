@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<div class="container">
+    <div>
+        <h2>Gerenciador de relatórios</h2>
+        
+        <ul class="list device">
+            {% for item in files %}
+            <li>
+                <p id="li {{ item.id }}" class="list device name{% if forloop.first %} blink{% endif %}">
+                    <a>{{ item.filename }}</a>
+                    <a class="list device name date">{{item.created_date}}</a>
+                    
+                    <box-icon onclick="window.open('http://localhost:8000/media/exported/{{ item.filename}}');" class="list device icon" name='download' type='solid' color='#ffffff'></box-icon>
+                    <box-icon class="list device icon" id="{{ item.id }}" onclick="deleteFileObjectById({{ item.id }})" name='x' color='#ffffff'></box-icon>
+                </p>
+            </li>
+        {% endfor %}
+        </ul>   
+
+        
+    </div>
+</div>
+{% endblock main %}

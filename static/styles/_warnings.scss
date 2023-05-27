@@ -1,0 +1,11 @@
+.warnings {
+    display: flex;
+    justify-content: center;
+}
+
+.warnings.channels {
+    justify-content: center;
+    background-color: $secondary-transparency;
+    border-radius: 30px;
+    width: 100%;
+}

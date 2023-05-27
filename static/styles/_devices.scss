@@ -1,0 +1,72 @@
+
+.list {
+    list-style-type: none;
+    margin: auto;
+    padding: auto;
+    
+    li {
+        @include rounded();
+        margin-bottom: 10px; 
+        p {
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        hr {
+            color: #2a9d9054;
+        }
+    }
+
+    &.device {
+        
+        &.name {
+            padding: 10px;
+
+            &.date {
+                font-size: 16px;
+                color: $secondary-transparency;
+            }
+
+            &.blink {
+                animation: blink 0.5s steps(5, end);
+                animation-iteration-count: 2;
+            }
+            
+            @keyframes blink {
+                0%, 100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0;
+                }
+            }
+            
+            
+              
+        }
+
+        &.desc {
+            padding: 10px;
+            margin: 0px;
+            a {
+                color: #2a9d9054;
+            }
+            a:nth-child(n+2) {
+                margin-left: 5vw;
+                float: right;
+            }
+        }
+
+        &.icon {
+            display: inline;
+            vertical-align: middle;
+            float: right;
+            margin-left: 10px;
+        }
+    }
+
+}
+
+.down.report {
+    background-color: #2a9d9054;
+}

@@ -1,0 +1,42 @@
+
+.list {
+    list-style-type: none;
+    margin: auto;
+    padding: auto;
+    
+    &.channel {
+
+        p {
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        &.name {
+            @include rounded();
+            padding: 10px;
+
+            a:link {
+                text-decoration: none;
+                color: white;
+            }
+
+        }
+
+        svg {
+            display: inline;
+            float: right;
+        }
+
+        &.desc {
+            width: 30%;
+            margin: 10px;
+        }
+
+        &.report {
+            display: inline-block;
+            position: right;
+            background-color: red;
+        }
+    }
+}
+
