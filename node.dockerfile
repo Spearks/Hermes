@@ -13,5 +13,7 @@ COPY . .
 
 EXPOSE 8000
 
+RUN ["chmod", "+x", "/app/node/celery.sh"]
+
 CMD ["/bin/bash"]
-ENTRYPOINT ["node/celery.sh"]
+ENTRYPOINT ["/app/node/celery.sh"]

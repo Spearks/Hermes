@@ -13,5 +13,7 @@ COPY . .
 
 EXPOSE 8000
 
+RUN ["chmod", "+x", "/app/node/runner.sh"]
+
 CMD ["/bin/bash"]
 ENTRYPOINT ["node/runner.sh"]   
