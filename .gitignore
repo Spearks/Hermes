@@ -10,6 +10,9 @@ Untitled.ipynb
 .stfolder
 .vscode
 static/src/output.css
+static/scripts/chart.js
+static/scripts/flowbite.min.js
+static/scripts/xlsx.full.min.js
 
 # Django #
 *.log
