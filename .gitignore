@@ -1,3 +1,16 @@
+# dev
+baremetal.nginx
+celerybeat-schedule
+db.json
+export_dummy.py
+export.py
+output.xlsx
+test.ipynb
+Untitled.ipynb
+.stfolder
+.vscode
+static/src/output.css
+
 # Django #
 *.log
 *.pot
@@ -8,6 +21,12 @@ media
 app/migrations/
 static/admin
 static/staticfiles.json
+static/assets/fonts/
+# cache
+static/CACHE
+
+#Node
+node_modules
 
 # Backup files # 
 *.bak 

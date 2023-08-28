@@ -1,0 +1,140 @@
+{% extends "index.html" %}
+{% load app_extras %}
+{% load cacheops %}
+{% block view %}
+
+<div class="grid grid-cols-3 gap-4 mb-4">
+    <div class="flex flex-col h-20 items-center rounded bg-gray-50 dark:bg-gray-800">
+        <p class="block mb-2 mt-2 border-b border-gray-200 rounded-t-lg dark:text-white dark:border-gray-600 h-max">
+            Estado do dispositivo
+        </p>
+
+        <p class="inline-flex text-2xl dark:text-white text-gray-400 dark:text-gray-500">
+
+            OK
+        </p>
+    </div>
+    <div class="flex flex-col h-20 items-center rounded bg-gray-50 dark:bg-gray-800">
+        <p class="block mb-2 mt-2 border-b border-gray-200 rounded-t-lg dark:text-white dark:border-gray-600 h-max">
+            Relatórios
+        </p>
+        <p class="inline-flex text-2xl dark:text-white text-gray-400 dark:text-gray-500">
+            {{ exports }}
+        </p>
+    </div>
+    <div class="flex flex-col h-20 items-center rounded bg-gray-50 dark:bg-gray-800">
+        <p class="block mb-2 mt-2 border-b border-gray-200 rounded-t-lg dark:text-white dark:border-gray-600 h-max">
+            Canais
+        </p>
+        <p class="inline-flex text-2xl dark:text-white text-gray-400 dark:text-gray-500">
+            {{ channels|length }}
+        </p>
+    </div>
+</div>
+
+
+{% cached 20 current_device.id %}
+
+{% mount_view_by_device current_device.id as mount_view_data %}
+
+{% with mount_view_data|index:1 as uid %}
+
+{% with mount_view_data|index:0 as list_ch %}
+
+{% for expr, data in list_ch.items %}
+
+<div class="grid grid-cols-3 gap-4 mb-4">
+
+    <div class="rounded-t-lg bg-gray-50 h-64 dark:bg-gray-800 p-0 col-span-2">
+
+        <div class="rounded-t-lg bg-gray-50 h-64 dark:bg-gray-800 p-0 col-span-2">
+            <div
+                class="bg-gray-50 text-sm font-medium rounded-t-lg h-4 dark:bg-gray-700 dark:text-gray-300 text-center">
+                {{ expr }}
+            </div>
+            <div id="cv{{ data.default.1 }}"
+                class="flex w-full h-60 bg-gray-50 dark:bg-slate-700 justify-center items-center">
+                <div id="toRemove{{ data.default.1 }}" class="text-center"
+                    onclick="showGrafanaIframe('http://localhost:3000/d-solo/{{ uid }}/{{ current_device.name}}?orgId=1&amp;panelId={{ data.default.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv{{ data.default.1 }}', 'h-60', 'toRemove{{ data.default.1 }}'  )">
+                    <svg class="h-20 w-20 bg-gray-50 text-slate-50 dark:text-slate-600 dark:bg-slate-700 text-center"
+                        aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <p class="text-slate-50 dark:text-slate-500 text-bold">Visualizar</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="rounded-t-lg bg-gray-50 h-64 dark:bg-gray-800 p-0">
+        <div class="bg-gray-50 text-sm font-medium rounded-t-lg h-4 dark:bg-gray-700 dark:text-gray-300 text-center">
+            {{ expr }}
+        </div>
+        <!-- Add grid-rows-3 class and set grid height to h-full -->
+        <div id="cv1{{ data.avg.1 }}" class="flex w-full h-20 bg-gray-50 dark:bg-slate-700 justify-center items-center align-middle">
+            <div id="toRemove1{{ data.avg.1 }}" class="text-center m-auto" 
+            onclick="showGrafanaIframe('http://localhost:3000/d-solo/{{ uid }}/new-dashboard?orgId=1&panelId={{ data.avg.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv1{{ data.avg.1 }}', 'h-20', 'toRemove1{{ data.avg.1 }}'  )">
+                <svg class="h-5 w-5 bg-gray-50 text-slate-50 dark:text-slate-600 dark:bg-slate-700 text-center"
+                    aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                        stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <p class="text-slate-50 dark:text-slate-500 text-bold">Visualizar</p>
+            </div>
+        </div>
+        <div id="cv2{{ data.max.1 }}" class="flex w-full h-20 bg-gray-50 dark:bg-slate-700 justify-center items-center align-middle">
+            <div id="toRemove2{{ data.max.1 }}" class="text-center m-auto" 
+            onclick="showGrafanaIframe('http://localhost:3000/d-solo/{{ uid }}/new-dashboard?orgId=1&panelId={{ data.max.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv2{{ data.max.1 }}', 'h-20', 'toRemove2{{ data.max.1 }}'  )">
+                <svg class="h-5 w-5 bg-gray-50 text-slate-50 dark:text-slate-600 dark:bg-slate-700 text-center"
+                    aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                        stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <p class="text-slate-50 dark:text-slate-500 text-bold">Visualizar</p>
+            </div>
+        </div>
+        
+        <div id="cv3{{ data.min.1 }}" class="flex w-full h-20 bg-gray-50 dark:bg-slate-700 justify-center items-center align-middle">
+            <div id="toRemove3{{ data.min.1 }}" class="text-center m-auto" 
+            onclick="showGrafanaIframe('http://localhost:3000/d-solo/{{ uid }}/new-dashboard?orgId=1&panelId={{ data.min.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv3{{ data.min.1 }}', 'h-20', 'toRemove3{{ data.min.1 }}'  )">
+            <svg class="h-5 w-5 bg-gray-50 text-slate-50 dark:text-slate-600 dark:bg-slate-700 text-center"
+                    aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                        stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <p class="text-slate-50 dark:text-slate-500 text-bold">Visualizar</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+{% endwith %}
+{% endwith %}
+{% endcached %} 
+
+<div class="fixed right-6 mb-6 bottom-6 group dark:bg-gray-700 bg-gray-50 rounded-md">
+    <label for="times" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-1">Selecione o
+        intervalo</label>
+    <select id="times"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected>120s</option>
+        <option value="5m">5m</option>
+        <option value="10m">10m</option>
+        <option value="1d">1d</option>
+        <option value="3d">3d</option>
+    </select>
+</div>
+
+
+
+{% endblock view %}

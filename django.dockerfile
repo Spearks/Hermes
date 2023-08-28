@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bullseye AS build
+sFROM python:3.10-slim-bullseye AS build
 
 WORKDIR /app
 

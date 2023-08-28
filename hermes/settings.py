@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 import environ
-a = '1223'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,8 +41,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'compressor',
+    'cacheops',
+    'widget_tweaks',
+    'rest_framework',
+    'django_extensions',
     # Hermes Web-Ui
     'app',
+    # Hermes API
+    'api'
+    # Hermes accounts
+
 ]
 
 MIDDLEWARE = [
@@ -68,7 +78,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                'django.template.context_processors.request', 
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -83,12 +93,13 @@ WSGI_APPLICATION = 'hermes.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql',#'django_psdb_engine',
         'NAME': env('PSQL_DB_NAME'),
         'USER': env('PSQL_DB_USER'),
         'PASSWORD': env('PSQL_DB_PASSWORD'),
         'HOST': env('PSQL_DB_HOST'),
         'PORT': env('PSQL_DB_PORT'),
+        #'OPTIONS': {'ssl': {'ca': env('MYSQL_ATTR_SSL_CA')}}
     }
 }
 
@@ -132,7 +143,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/staticroot')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static/staticroot'),
+]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     
 MEDIA_ROOT = (
@@ -149,3 +164,57 @@ CELERY_TIMEZONE = env('TIMEZONE')
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_TASK_RESULT_EXPIRES = 1800
+CELERY_RESULT_BACKEND = env('REDIS_CELERY_RESULT_BACKEND')
+#CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
+#CELERY_TASK_ALWAYS_EAGER = True
+
+CELERY_BEAT_SCHEDULE = {
+    'dashboard-auto-update': {
+        'task': 'app.tasks.update_dashboard',
+        'schedule': 10,  # Update dashboards 
+    },
+}
+
+# Compressor config
+COMPRESS_ROOT = BASE_DIR / 'static'
+
+COMPRESS_ENABLED = True
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+
+LOGIN_URL = 'accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = "/"
+
+# Cache-ops config 
+CACHEOPS_REDIS = {
+    'host': env('REDIS_HOST'),
+    'port': env('REDIS_PORT'),       
+    'db': 3,           
+}
+
+CACHEOPS = {
+    # Automatically cache any User.objects.get() calls for 15 minutes
+    # This also includes .first() and .last() calls,
+    # as well as request.user or post.author access,
+    # where Post.author is a foreign key to auth.User
+    'auth.user': {'ops': 'get', 'timeout': 60*15},
+
+    # Automatically cache all gets and queryset fetches
+    # to other django.contrib.auth models for an hour
+    'auth.*': {'ops': {'fetch', 'get'}, 'timeout': 60*10},
+
+    # Cache all queries to Permission
+    # 'all' is an alias for {'get', 'fetch', 'count', 'aggregate', 'exists'}
+    'auth.permission': {'ops': 'all', 'timeout': 60*10},
+
+    'app.*': {'ops': {'fetch', 'get', 'count'}, 'timeout': 60*10},
+}
+CACHEOPS_DEGRADE_ON_FAILURE = True
+
+# Django rest-framework configs
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

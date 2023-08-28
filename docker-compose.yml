@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.0'
 
 services:
   prometheus:
@@ -9,15 +9,28 @@ services:
       - ./node/targets:/etc/prometheus/targets/
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
-    network_mode: "host"
+    ports: 
+      - 9090:9090
     hostname: prometheus
+
+  pushgateway:
+    image: prom/pushgateway
+    ports: 
+      - 9091:9091
+
+    hostname: pushgateway
 
   grafana:
     image: docker.io/grafana/grafana-enterprise:9.5.1
     volumes: 
-      - grafana_data:/var/lib/grafana
-    ports:
-      - 3000:3000
+      - ./node/grafana:/etc/grafana/provisioning
+    
+    environment:
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_API_ENABLED=true
+      
+    network_mode: host
 
   nginx:
     image: docker.io/bitnami/nginx:1.23-debian-11
@@ -82,8 +95,17 @@ services:
       - 5672:5672
     hostname: rabbitmq 
 
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+    hostname: rabbitmq 
+
 volumes:
   prometheus_data:
   grafana_data:
   postgres_data:
   django_media:
+  redis_data:

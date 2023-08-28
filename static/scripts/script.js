@@ -1,145 +1,32 @@
 
+function addExportToChannel() {
+  // delete the buttons
+  const buttonAdd = document.getElementById('button-add').cloneNode(true);
+  const buttonDown = document.getElementById('button-export').cloneNode(true);
 
-var iframe = document.getElementsByTagName('iframe')[0];
-iframe.addEventListener("load", function() {
-		/* the JS equivalent of the answer
-     *
-     * var node = document.createElement('style');
-     * node.appendChild(document.createTextNode('body { background: #fff; }'));
-     * window.frames[0].document.head.appendChild(node);
-     */
-    
-    // the cleaner and simpler way
-    window.frames[0].document.getElementsByClassName("panel-title")[0].style.display = "none";
-});
+  document.getElementById('button-add').remove();
+  document.getElementById('button-export').remove();
 
+  const originalDiv = document.getElementById('form-export');
+  const copiedDiv = originalDiv.cloneNode(true);
+  
+  // get the parent element of form-export
+  const parentElement = document.getElementById('form');
 
-function addchannel() {
-    // Get the target div element
-    var targetDiv = document.querySelector('.parentch');
+  // add a margin top of 5 rem
+  copiedDiv.classList.add('mt-5');
+  copiedDiv.appendChild(buttonAdd);
+  copiedDiv.appendChild(buttonDown);
 
-    // Create a new div element
-    var div = document.createElement('div');
-    div.className = 'chview picker item';
-
-    // Create a form element
-    var form = document.createElement('form');
-    form.action = 'excel';
-
-    // Create the first input element
-    var input1 = document.createElement('input');
-    input1.className = 'form input';
-    input1.type = 'datetime-local';
-    input1.value = '2023-04-30T00:00';
-    input1.id = 'time';
-    input1.name = 'time';
-
-    // Create the box-icon element
-    var boxIcon = document.createElement('box-icon');
-    boxIcon.className = 'form alt';
-    boxIcon.setAttribute('name', 'tag-alt');
-    boxIcon.setAttribute('type', 'solid');
-    boxIcon.setAttribute('color', '#ffffff');
-
-    // Create the second input element
-    var input2 = document.createElement('input');
-    input2.className = 'form input';
-    input2.type = 'datetime-local';
-    input2.value = '2023-04-30T00:00';
-    input2.id = 'time';
-    input2.name = 'time-f';
-
-    // Create the third input element
-    var input3 = document.createElement('input');
-    input3.className = 'form input points';
-    input3.type = 'number';
-    input3.id = 'pontos';
-    input3.name = 'pmin';
-
-    // Create the label element
-    var label = document.createElement('label');
-    label.className = 'form input points text';
-    label.setAttribute('for', 'pmin');
-    label.textContent = 'P/min';
-
-    // Append the elements to their respective parent elements
-    form.appendChild(input1);
-    form.appendChild(boxIcon);
-    form.appendChild(input2);
-    form.appendChild(input3);
-    form.appendChild(label);
-
-    div.appendChild(form);
-
-    // Append the new div to the target div
-    targetDiv.appendChild(div);
-
-    var parentDiv = document.querySelector('.parentch');
-    // Append the div to the body of the document
-
-    var elementToDelete = document.querySelector('.plus');
-    if (elementToDelete) {
-      // Get the parent node of the element
-      var parentElement = elementToDelete.parentNode;
-    
-      // Remove the element from its parent node
-      parentElement.removeChild(elementToDelete);
-    }
-
-    var elementToDelete = document.querySelector('.report');
-    if (elementToDelete) {
-      // Get the parent node of the element
-      var parentElement = elementToDelete.parentNode;
-    
-      // Remove the element from its parent node
-      parentElement.removeChild(elementToDelete);
-    }
-
-    var svgElement = document.createElement('box-icon');
-    svgElement.setAttribute('name', 'plus-circle');
-    svgElement.setAttribute('class', 'plus');
-    svgElement.setAttribute('onclick', 'addchannel();');
-    svgElement.setAttribute('rotate', '90');
-    svgElement.setAttribute('color', '#ffffff');
-
-    // Create the parent <p> element
-    var pElement = document.createElement('p');
-    pElement.setAttribute('class', 'report');
-    pElement.setAttribute('onclick', 'apiExportCall()');
-
-    // Create the <a> element
-    var aElement = document.createElement('a');
-    aElement.textContent = 'Baixar';
-
-    // Create the <box-icon> element
-    var boxIconElement = document.createElement('box-icon');
-    boxIconElement.setAttribute('name', 'down-arrow-circle');
-    boxIconElement.setAttribute('class', 'down');
-    boxIconElement.setAttribute('color', '#ffffff');
-
-    // Append the <a> element to the parent <p> element
-    pElement.appendChild(aElement);
-
-    // Append the <box-icon> element to the parent <p> element
-    pElement.appendChild(boxIconElement);
-
-    // Get the target element where you want to append the <p> element
-    var targetElement = document.getElementById('targetElementId');
-
-    // Append the <p> element to the target element
-    
-    // Get the target element where you want to append the SVG
-    // Append the SVG element to the target element
-    
-
-    parentDiv.appendChild(div);
-    parentDiv.appendChild(svgElement);
-    parentDiv.appendChild(pElement);
-  }
+  parentElement.appendChild(copiedDiv);
+}
 
 function apiExportCall() {
-  // Get all the form elements
+  // Get all the forms elements 
   var forms = document.getElementsByTagName('form');
+
+  // Get the current channel of the export
+  const channel = window.location.pathname.split("/").pop();
 
   // Initialize an array to store the URL parameters
   var urlParametersArray = [];
@@ -165,14 +52,40 @@ function apiExportCall() {
     urlParametersArray.push(encodedData);
   }
 
+  urlParametersArray.push("channel=" + channel);
+
   // Join the URL parameters with ampersands (&)
   var urlParameters = urlParametersArray.join('&');
 
   // Create the final URL
-  var url = 'http://localhost:8000/channel/excel?' + urlParameters;
-
+  var url = h_url + '/channel/export/file/xlsx?' + urlParameters;
+  
   window.location.href = url;
 }
+
+function showGrafanaIframe(iframeSrc, id, size, divToRemove) {
+  // Get the div to append the iframe
+  const divToAppend = document.getElementById(id);
+
+  // Remove the div specified in divToRemove
+  const divToRemoveElement = document.getElementById(divToRemove);
+  if (divToRemoveElement) {
+    divToRemoveElement.remove();
+  } else {
+    console.error(`Element with ID '${divToRemove}' not found.`);
+  }
+
+  // Create the iframe element
+  const iframe = document.createElement('iframe');
+  iframe.classList.add('w-full', size);
+  iframe.id = 'ifrm';
+  iframe.src = iframeSrc;
+
+  // Append the iframe to the divToAppend
+  divToAppend.appendChild(iframe);
+}
+
+
 
 function deleteFileObjectById(id) {
 
@@ -210,4 +123,125 @@ function deleteFileObjectById(id) {
   //     console.error('An error occurred while deleting the object:', error);
   //     // Handle any network or other errors
   //   });
+}
+
+    // Get the select element by its ID
+const selectElement = document.getElementById('times');
+
+// Function to handle the change event
+function handleSelectChange() {
+    // Get the selected value
+    const selectedValue = selectElement.value;
+
+    // Perform some action based on the selected value
+    switch (selectedValue) {
+        case '5m':
+            console.log('You selected 5 minutes.');
+            break;
+        case '10m':
+            console.log('You selected 10 minutes.');
+            break;
+        case '1d':
+            console.log('You selected 1 day.');
+            break;
+        case '3d':
+            console.log('You selected 3 days.');
+            break;
+        default:
+            console.log('You selected 120 seconds.');
+            break;
+    }
+}
+
+// Add event listener to the select element
+selectElement.addEventListener('change', handleSelectChange);
+
+
+function activateSelectListOnChannels() {
+
+  var channelInputs = document.querySelectorAll('input.channel');
+
+  channelInputs.forEach(function(input) {
+      input.style.display = 'inline-block';
+  });
+  
+}
+
+// TODO: fix it
+function exportChannelsOnMultipleView() {
+  // Get all the form elements
+  var forms = document.getElementsByTagName('form');
+
+  // Initialize an array to store the URL parameters
+  var urlParametersArray = [];
+
+  // Iterate over each form
+  for (var i = 0; i < forms.length; i++) {
+    var form = forms[i];
+    var formDataTeste = new FormData(form);
+    console.log(formDataTeste);
+    
+    // Collect the form data
+    var formData = {};
+    
+    // Collect input values
+    var inputs = form.getElementsByTagName('input');
+    for (var j = 0; j < inputs.length; j++) {
+      var input = inputs[j];
+      formData[input.name] = input.value;
+    }
+
+    // Collect select values
+    var selects = form.getElementsByTagName('select');
+    for (var k = 0; k < selects.length; k++) {
+      var select = selects[k];
+      formData[select.name] = select.value;
+    }
+    
+    // Store formData in the urlParametersArray
+    urlParametersArray.push(formData);
+  }
+
+  // const combinedParams = urlParametersArray
+  //   .map(data => Object.keys(data)
+  //     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+  //     .join('&')
+  //   )
+  //   .join('&'); // Join individual parameter strings
+
+  const combinedParams = urlParametersArray.reduce((result, data) => {
+    Object.keys(data).forEach(key => {
+      result[key] = data[key];
+    });
+    return result;
+  }, {});
+    
+
+
+  console.log(combinedParams);
+  console.log(urlParametersArray);
+}
+
+
+function getAllInputChannels() { 
+  var channelInputs = document.querySelectorAll('input.channel');
+
+  var channels = [];
+
+  // Get channels and insert into to "channels"
+  channelInputs.forEach(function(input) {
+      var id = input.id;
+      if (input.checked) {
+        channels.push(id);
+      }
+  }); 
+
+  // Encode the url 
+  var encodedChannels = channels.map(function(id) {
+    return "channel=" + encodeURIComponent(id);
+  }).join('&');
+
+  var url = h_url + '/channel/export/view/multiple?' + encodedChannels;
+
+  window.location.href = url;
 }

@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#sidenav {
+    background: #2564eb0c;
+
+    backdrop-filter: blur( 10px );
+    -webkit-backdrop-filter: blur( 10px );
+    border-radius: 1px;
+    border-right: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+body {
+    /* background-image: url("../assets/noise.png"); */
+    background-color: #2e3d52;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23020617' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+#myChart {
+    width: 100%;
+}

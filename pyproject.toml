@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "hermes"
-version = "0.1"
-description = "An IOT interface for Unesp-FEG"
+version = "0.2"
+description = "Interface de aquisição de dados geológicos, escrita em Python (3.10), utilizando a framework Django (+ DRF ) juntamente ao Prometehus e Grafana."
 authors = ["Otávio Canuto"]
-license = "GPL"
+license = "GNU AGPLv3 "
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -21,6 +21,19 @@ gunicorn = "^20.1.0"
 whitenoise = "^6.4.0"
 psycopg2-binary = "^2.9.6"
 watchdog = "^3.0.0"
+django-compressor = "^4.3.1"
+django-plotly-dash = "^2.2.1"
+grafanalib = "^0.7.0"
+redis = "^4.6.0"
+django-widget-tweaks = "^1.4.12"
+mysqlclient = "^2.2.0"
+django-cacheops = "^7.0.1"
+django-psdb-engine = "^1.0.6"
+promql-parser = "^0.1.3"
+djangorestframework = "^3.14.0"
+django-extensions = "^3.2.3"
+jupyter = "^1.0.0"
+xlsxwriter = "^3.1.2"
 
 
 [tool.poetry.group.node.dependencies]

@@ -1,38 +1,55 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "_base.html" %} 
+{% load app_extras %}
+{% block content %}
 
-{% block main %}
-<div class="container">
-    {% if channels %}
-        {% for channel in channels %}
-        <div>
-            <h2>{{ channel.name }}</h2>
 
-            <p>
-                <box-icon name='component' type='solid' color='#f5f3f3' ></box-icon>
-                <a href="">
-                    {{ channel.device }}
-                </a>
-            </p>
+<div
+    class="text-sm font-medium text-center mb-3 text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700"
+>
+    <ul class="flex flex-wrap -mb-px">
+        <li class="mr-2">
+            <a 
+                href="/"
+                aria-current="page"
+                {% if request.path == '/' %}
+                class="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500"
+                {% else %}
+                    class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                {% endif %}
+
+                >Visão geral</a
+            >
+        </li>
+    
+        {% for device in devices %}
+        <li class="mr-2">
+            <a 
+                href="/view/{{ device.id }}"
+                aria-current="page"
             
-            <div class="expand">
-                <box-icon class="icon download" name='expand-vertical' rotate='180' color='#fffafa' ></box-icon>
-                <iframe id="expand1" src="url"
-                    width="450" height="200" frameborder="0">
-                </iframe>
-            </div>
-            
-        </div>
-        {% endfor %}
-    {% else %}
-        <div class="warnings">
-            <p class="warnings channels">
-                <box-icon name='error' color='#ffffff' ></box-icon>
-                Não há canais
-            </p>
-        </div>
+                {% with device.id as device_id %}
+                    {% with '/view/'|addstr:device_id as url %}
+                        {% if request.path == url %}
+                        class="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500"
+                        {% else %}
+                            class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                        {% endif %}
+                        {% endwith %}
+                {% endwith %}
+    
+            >
+                {{ device.name }} 
+
+            </a>
+        </li>
         
-    {% endif %}
-
+        {%endfor%}
+        </li>
+    </ul>
 </div>
-{% endblock main %}
+
+{% block view %}
+
+{% endblock view %}
+
+{% endblock content %}

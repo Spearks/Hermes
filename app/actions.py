@@ -1,0 +1,3 @@
+def deleteData(by):
+    
+    pass
