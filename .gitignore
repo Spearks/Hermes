@@ -26,6 +26,7 @@ app/migrations/
 static/admin
 static/staticfiles.json
 static/assets/fonts/
+static/scripts/node/
 # cache
 static/CACHE
 

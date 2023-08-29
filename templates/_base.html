@@ -20,11 +20,11 @@
 
    {% compress js inline %}
    {% if request.path == '/reports/preview' %}
-      <script src="{% static 'scripts/canvas-datagrid.js' %}"></script>
-      <script src="{% static 'scripts/xlsx.full.min.js' %}"></script>
+      <script src="{% static 'scripts/node/canvas-datagrid.js' %}"></script>
+      <script src="{% static 'scripts/node/xlsx.full.min.js' %}"></script>
    {% endif %}
 
-   <script src="{% static 'scripts/flowbite.min.js' %}"></script>
+   <script src="{% static 'scripts/node/flowbite.min.js' %}"></script>
    <script src="{% static 'scripts/script.js' %}"></script>
    {% endcompress %}
 
