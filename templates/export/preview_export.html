@@ -16,7 +16,7 @@
 
     sheet = urlParams.get('sheet');
 
-    const fileUrl = 'http://127.0.0.1:41000/media/exported/' + sheet;
+    const fileUrl =  h_url + '/media/exported/' + sheet;
     fetch(fileUrl)
   .then(response => response.arrayBuffer())
   .then(buffer => {
@@ -33,7 +33,6 @@
     // Format the first column as string
     const formattedData = jsonData.map(row => {
       const formattedRow = [...row];
-      console.log(row);
       formattedRow[0] = String(formattedRow[0]); // Convert to string
       return formattedRow;
     });

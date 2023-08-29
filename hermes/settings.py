@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'rest_framework',
     'django_extensions',
+    'django_minify_html',
     # Hermes Web-Ui
     'app',
     # Hermes API
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'django_minify_html.middleware.MinifyHtmlMiddleware'
 ]
 
 ROOT_URLCONF = 'hermes.urls'

@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@fontsource/inter": "^5.0.5",
+    "canvas-datagrid": "^0.4.6",
     "flowbite": "^1.6.5",
     "heroicons": "^2.0.18",
     "xlsx": "^0.18.5"

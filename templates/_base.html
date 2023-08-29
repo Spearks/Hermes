@@ -18,15 +18,15 @@
    
    {% endcompress %}
 
+   {% compress js inline %}
    {% if request.path == '/reports/preview' %}
-      <script src="https://unpkg.com/canvas-datagrid@0.22.12/dist/canvas-datagrid.js"></script>
+      <script src="{% static 'scripts/canvas-datagrid.js' %}"></script>
       <script src="{% static 'scripts/xlsx.full.min.js' %}"></script>
    {% endif %}
 
-
-
    <script src="{% static 'scripts/flowbite.min.js' %}"></script>
    <script src="{% static 'scripts/script.js' %}"></script>
+   {% endcompress %}
 
    <title>Hermes</title>
 
@@ -50,7 +50,7 @@
                   </svg>
                </button>
                <a href="/" class="flex ml-2 md:mr-24">
-                  <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/348_Ubuntu_logo-64.png"
+                  <img src="{% static 'assets/logo.png' %}"
                      class="h-8 mr-3" alt="Hermes logo" />
                   <span
                      class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Hermes</span>
@@ -63,8 +63,9 @@
                         class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                         aria-expanded="false" data-dropdown-toggle="dropdown-user">
                         <span class="sr-only">Open user menu</span>
-                        <img class="w-8 h-8 rounded-full" src="https://cdn.statically.io/gh/leafac/fake-avatars/main/avatars/png/99.png"
-                           alt="user photo">
+                        <!-- Todo: user implementation -->
+                        <!-- <img class="w-8 h-8 rounded-full" src="https://cdn.statically.io/gh/leafac/fake-avatars/main/avatars/png/99.png"
+                           alt="user photo"> -->
                      </button>
                   </div>
                   <div
