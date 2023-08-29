@@ -1,15 +1,10 @@
 
 # Hermes
 
-**Interface de aquisição de dados geológicos**, escrita em Python (3.10), utilizando a framework [Django](https://www.djangoproject.com/) (+ [DRF](https://www.django-rest-framework.org/) ) juntamente ao [Prometheus](https://prometheus.io/) e [Grafana](grafana.com/). 
+**Interface de aquisição de dados geológicos**, escrita em Python (3.10), utilizando a framework [Django](https://www.djangoproject.com/) (+ [DRF](https://www.django-rest-framework.org/) ) juntamente ao [Prometheus](https://prometheus.io/) e [Grafana](https://grafana.com/). 
 
 
 Desenvolvida para o Departamento de Engenharia Cívil da *Faculdade de Engenharia e Ciências de Guaratinguetá*.
-
-
-
-
-
 
 ## Licença
 
@@ -88,8 +83,8 @@ Para configurar os alvos de aquisição, adicione um arquivo `.yml` em
 * 3 - Copie as dependências para static/assets & static/scripts
 
     * `cp node_modules/@fontsource/inter static/assets/fonts/@fontsource/inter `
-    * `cp node_modules/flowbite/dist/flowbite.min.js static/scripts/ `
-    * `cp node_modules/xlsx/dist/xlsx.full.min.js static/scripts`
+    * `cp node_modules/flowbite/dist/flowbite.min.js static/scripts/node/ `
+    * `cp node_modules/xlsx/dist/xlsx.full.min.js static/scripts/node/ `
 
 ### Compile os estilos
 
