@@ -1,4 +1,4 @@
-version: '3.0'
+version: '3.2'
 
 services:
   prometheus:
@@ -13,6 +13,7 @@ services:
       - 9090:9090
     hostname: prometheus
 
+
   pushgateway:
     image: prom/pushgateway
     ports: 
@@ -24,13 +25,15 @@ services:
     image: docker.io/grafana/grafana-enterprise:9.5.1
     volumes: 
       - ./node/grafana:/etc/grafana/provisioning
-    
+      - grafana_data:/var/lib/grafana
+    ports: 
+      - 3000:3000
+
     environment:
       - GF_SECURITY_ALLOW_EMBEDDING=true
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_API_ENABLED=true
       
-    network_mode: host
 
   nginx:
     image: docker.io/bitnami/nginx:1.23-debian-11
@@ -70,11 +73,7 @@ services:
       - prometheus
       - postgres
       - rabbitmq    
-    extra_hosts:
-    - "prometheus:127.0.0.1"
-    - "rabbitmq:127.0.0.1"
-    - "postgres:127.0.0.1"
-    network_mode: "host"
+
 
   postgres:
     image: docker.io/postgres:13

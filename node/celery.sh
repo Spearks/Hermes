@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sleep 10
+sleep 1
 
 poetry shell
     
@@ -18,4 +18,4 @@ python manage.py collectstatic --noinput
 #     echo "Runner not defined"
 # fi
 
-watchmedo shell-command --patterns="*.py" --recursive --command='pkill -f "celery worker"; celery -A hermes worker --loglevel=INFO' /app
+celery -A hermes worker --loglevel=INFO

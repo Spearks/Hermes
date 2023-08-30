@@ -4,7 +4,10 @@ from hermes.settings import env
 from app.models import Channel, DeviceModel
 
 GRAFANA_API_TOKEN=env('GRAFANA_TOKEN')
-GRAFANA_API_URL="http://localhost:3000"
+GRAFANA_HOST=env('GRAFANAHOST')
+GRAFANA_PORT=str(env('GRAFANAPORT'))
+GRAFANA_API_URL=f"http://{GRAFANA_HOST}:{GRAFANA_PORT}"
+
 
 @app.task
 def get_dashboards_by_name_and_tag(name, tag):
