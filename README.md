@@ -3,6 +3,7 @@
 
 **Interface de aquisição de dados geológicos**, escrita em Python (3.10), utilizando a framework [Django](https://www.djangoproject.com/) (+ [DRF](https://www.django-rest-framework.org/) ) juntamente ao [Prometheus](https://prometheus.io/) e [Grafana](https://grafana.com/). 
 
+![Diagrama Hermes](./diagram.svg)
 
 Desenvolvida para o Departamento de Engenharia Cívil da *Faculdade de Engenharia e Ciências de Guaratinguetá*.
 
