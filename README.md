@@ -1,5 +1,7 @@
 
-# Hermes
+
+![Diagrama Hermes](./hermes.png)
+## Hermes
 
 **Interface de aquisição de dados geológicos**, escrita em Python (3.10), utilizando a framework [Django](https://www.djangoproject.com/) (+ [DRF](https://www.django-rest-framework.org/) ) juntamente ao [Prometheus](https://prometheus.io/) e [Grafana](https://grafana.com/). 
 
