@@ -7,7 +7,7 @@ license = "GNU AGPLv3 "
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
 django = "^4.1.7"
 django-environ = "^0.10.0"
 prometheus-client = "^0.16.0"

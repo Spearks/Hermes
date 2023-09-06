@@ -63,7 +63,10 @@ class ExportChannelsView(viewsets.ViewSet):
             data = data_dict['data']
         
             df = pd.DataFrame(data, columns=['ds', 'y'])
+
+            df['ds'] = pd.to_datetime(df['ds'], unit='ms')
             
+            print(df)
             ch = str(Export['channelId'])
             
             # Write the DataFrame to the Excel sheet

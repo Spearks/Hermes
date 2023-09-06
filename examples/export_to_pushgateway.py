@@ -11,7 +11,7 @@ registry = CollectorRegistry()
 # Create Gauge metrics for six pressure channels
 pressure_gauges = []
 for i in range(1, 7):
-    gauge_name = f'triax_nome_{i}'
+    gauge_name = f'dummy_nome_{i}'
     gauge_description = f'Random pressure data for channel {i} in Bar'
     pressure_gauges.append(Gauge(gauge_name, gauge_description, registry=registry))
 

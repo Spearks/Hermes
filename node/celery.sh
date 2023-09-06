@@ -19,3 +19,5 @@ python manage.py collectstatic --noinput
 # fi
 
 celery -A hermes worker --loglevel=INFO
+
+

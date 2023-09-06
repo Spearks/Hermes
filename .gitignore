@@ -14,7 +14,9 @@ static/scripts/chart.js
 static/scripts/flowbite.min.js
 static/scripts/xlsx.full.min.js
 ecosystem.config.js
-node/grafana/dashboards/Hermes/
+node/grafana/dashboards/Hermes/*.json
+.devcontainer/
+
 # Django #
 *.log
 *.pot

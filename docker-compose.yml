@@ -1,5 +1,9 @@
 version: '3.2'
 
+networks:
+  hermes:
+    driver: bridge
+
 services:
   prometheus:
     image: docker.io/prom/prometheus
@@ -12,14 +16,16 @@ services:
     ports: 
       - 9090:9090
     hostname: prometheus
-
+    networks:
+      - hermes
 
   pushgateway:
     image: prom/pushgateway
     ports: 
       - 9091:9091
-
     hostname: pushgateway
+    networks:
+      - hermes
 
   grafana:
     image: docker.io/grafana/grafana-enterprise:9.5.1
@@ -28,13 +34,16 @@ services:
       - grafana_data:/var/lib/grafana
     ports: 
       - 3000:3000
-
     environment:
       - GF_SECURITY_ALLOW_EMBEDDING=true
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_API_ENABLED=true
-      
-
+      - GRAFANA_PASSWORD=${GRAFANA_PASSWORD}
+    networks:
+      - hermes
+    entrypoint: ["sh", "-c"]
+    
+    command: ["cd /usr/share/grafana && echo 'grafana-cli admin reset-admin-password ${GRAFANA_PASSWORD}' > /home/grafana/exec.sh && chmod +x /home/grafana/exec.sh && /home/grafana/exec.sh  && /run.sh" ]
   nginx:
     image: docker.io/bitnami/nginx:1.23-debian-11
     hostname: nginx
@@ -42,11 +51,13 @@ services:
       - 8001:7000
     volumes:
       - ./node/hermes.conf:/opt/bitnami/nginx/conf/server_blocks/hermes.conf
+    networks:
+      - hermes
 
   django:
     build:
       context: .
-      dockerfile: django.dockerfile
+      dockerfile: ./node/docker/django.dockerfile
     hostname: django
     ports: 
       - 8000:8000
@@ -59,11 +70,13 @@ services:
       - prometheus
       - postgres
       - rabbitmq
+    networks:
+      - hermes
 
   celery:
     build:
       context: .
-      dockerfile: node.dockerfile
+      dockerfile: ./node/docker/celery.dockerfile
     volumes:
       - django_media:/app/media
       - ./:/app/
@@ -73,7 +86,8 @@ services:
       - prometheus
       - postgres
       - rabbitmq    
-
+    networks:
+      - hermes
 
   postgres:
     image: docker.io/postgres:13
@@ -85,14 +99,17 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
-
     hostname: postgres 
+    networks:
+      - hermes
 
   rabbitmq:
     image: docker.io/rabbitmq:3.12.0-rc.2-alpine
     ports: 
       - 5672:5672
     hostname: rabbitmq 
+    networks:
+      - hermes
 
   redis:
     image: redis:latest
@@ -101,6 +118,8 @@ services:
     volumes:
       - redis_data:/data
     hostname: rabbitmq 
+    networks:
+      - hermes
 
 volumes:
   prometheus_data:

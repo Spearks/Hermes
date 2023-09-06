@@ -9,11 +9,11 @@ RUN PYTHONPATH=${PYTHONPATH}:${PWD} pip3 install poetry
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-dev
 
-COPY . . 
+COPY ../.. . 
 
 EXPOSE 8000
 
 RUN ["chmod", "+x", "/app/node/runner.sh"]
 
 CMD ["/bin/bash"]
-ENTRYPOINT ["node/runner.sh"]   
+ENTRYPOINT ["/app/node/runner.sh"]   
