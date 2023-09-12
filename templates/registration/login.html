@@ -1,41 +1,79 @@
-{% extends "_base.html" %} 
-{% load widget_tweaks %}
-{% block body %}
+{% extends "_base.html" %} {% load widget_tweaks %} {% block body %}
 
 <section>
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/348_Ubuntu_logo-64.png"
-            class="h-8 mr-3" alt="Hermes logo" />
-         <span class="self-center text-2xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Hermes</span>
-        </a>
-        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                    Entre em sua conta
-                </h1>
-                <!-- <form class="space-y-4 md:space-y-6" action="{% url 'login' %}"> -->
-                <form class="space-y-4 md:space-y-6" role="form" action="." method="POST">
-                    {% csrf_token %}
-                    {{ form.non_field_errors }}
-                    <div>
-                        <label for="{{ form.username.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seu nome de usuário</label>
-                        <!-- <input type="email" name="email" id="email" class="" placeholder="name@company.com" required=""> -->
-                        {{ form.username|add_class:'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' }}
-                        {{ form.username.errors }}
-                    </div>
+  <div
+    class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+  >
+    <a
+      href="#"
+      class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+    >
+      <img
+        src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/348_Ubuntu_logo-64.png"
+        class="h-8 mr-3"
+        alt="Hermes logo"
+      />
+      <span
+        class="self-center text-2xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"
+        >Hermes</span
+      >
+    </a>
+    <div
+      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <h1
+          class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+        >
+          Entre em sua conta
+        </h1>
+        <!-- <form class="space-y-4 md:space-y-6" action="{% url 'login' %}"> -->
+        <form
+          class="space-y-4 md:space-y-6"
+          role="form"
+          action="."
+          method="POST"
+        >
+          {% csrf_token %} {{ form.non_field_errors }}
+          <div>
+            <label
+              for="{{ form.username.id_for_label }}"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Seu nome de usuário</label
+            >
+            <!-- <input type="email" name="email" id="email" class="" placeholder="name@company.com" required=""> -->
+            {{ form.username|add_class:'bg-gray-50 border border-gray-300
+            text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600
+            focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500' }} {{
+            form.username.errors }}
+          </div>
 
-                    <div>
-                        <label for="{{ form.password.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sua senha</label>
-                        <!-- <input type="password" name="password" id="password" placeholder="••••••••" class="" required=""> -->
-                        {{ form.password|add_class:'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' }}
-                    </div>
+          <div>
+            <label
+              for="{{ form.password.id_for_label }}"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Sua senha</label
+            >
+            <!-- <input type="password" name="password" id="password" placeholder="••••••••" class="" required=""> -->
+            {{ form.password|add_class:'bg-gray-50 border border-gray-300
+            text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600
+            focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500' }}
+          </div>
 
-                    <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Entrar</button>
-                </form>
-            </div>
-        </div>
+          <button
+            type="submit"
+            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          >
+            Entrar
+          </button>
+        </form>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
 {% endblock body %}

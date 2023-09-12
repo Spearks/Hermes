@@ -13,7 +13,7 @@ COPY ../.. .
 
 EXPOSE 8000
 
-RUN ["chmod", "+x", "/app/node/runner.sh"]
+RUN ["chmod", "+x", "/app/node/docker/runner.sh"]
 
 CMD ["/bin/bash"]
-ENTRYPOINT ["/app/node/runner.sh"]   
+ENTRYPOINT ["/app/node/docker/runner.sh"]   

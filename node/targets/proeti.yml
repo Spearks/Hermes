@@ -1,5 +1,5 @@
 - targets:
-     - pushgateway:9091
+    - pushgateway:9091
   labels:
-      job: file_sd_configs
+    job: file_sd_configs
 # Configuração target do Hermes Triaxial

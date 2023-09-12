@@ -17,6 +17,8 @@ ecosystem.config.js
 node/grafana/dashboards/Hermes/*.json
 .devcontainer/
 
+# MacOS 
+.DS_store
 # Django #
 *.log
 *.pot

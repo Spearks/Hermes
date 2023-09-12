@@ -1,12 +1,19 @@
 #!/bin/bash
 
-sleep 10
-
 poetry shell
     
+set -a 
+source .env
+
+sleep 15
+python /app/node/docker/setup.py 
+
+echo ${GRAFANA_TOKEN}
+
 python manage.py makemigrations --noinput
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput
+
 
 # if [[ "$RUNNER" == "gunicorn" ]]; then
 #     echo "Node set to gunicorn"
@@ -19,4 +26,4 @@ python manage.py collectstatic --noinput
 # fi
 
 
-gunicorn hermes.wsgi -b 0.0.0.0 --reload
+GRAFANA_TOKEN={$GRAFANA_TOKEN} gunicorn hermes.wsgi -b 0.0.0.0 --reload

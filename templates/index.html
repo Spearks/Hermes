@@ -8,7 +8,8 @@
 >
     <ul class="flex flex-wrap -mb-px">
         <li class="mr-2">
-            <a 
+            <!-- prettier-ignore -->
+            <a
                 href="/"
                 aria-current="page"
                 {% if request.path == '/' %}
@@ -16,13 +17,15 @@
                 {% else %}
                     class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                 {% endif %}
-
-                >Visão geral</a
             >
+                Visão geral
+            </a>
+            <!-- prettier-ignore -->
         </li>
     
         {% for device in devices %}
         <li class="mr-2">
+            <!-- prettier-ignore -->
             <a 
                 href="/view/{{ device.id }}"
                 aria-current="page"
@@ -36,11 +39,11 @@
                         {% endif %}
                         {% endwith %}
                 {% endwith %}
-    
             >
                 {{ device.name }} 
 
             </a>
+            <!-- prettier-ignore -->
         </li>
         
         {%endfor%}

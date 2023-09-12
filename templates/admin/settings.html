@@ -1,85 +1,85 @@
-{% extends "_base.html" %}
-{% load app_extras %}
-{% load cacheops %}
+{% extends "_base.html" %} 
+{% load app_extras %} 
+{% load cacheops %} 
 {% block content %}
 
 <div class="bg-gray-50 dark:bg-gray-800 h-64 rounded-xl">
-    <div
-        class="text-lg font-medium justify-center text-center align-middle text-gray-500 border-b-2 border-gray-200 dark:text-gray-400 dark:border-gray-700 p-3  bg-gray-50 dark:bg-gray-800 rounded-t-lg">
+  <div
+    class="text-lg font-medium justify-center text-center align-middle text-gray-500 border-b-2 border-gray-200 dark:text-gray-400 dark:border-gray-700 p-3 bg-gray-50 dark:bg-gray-800 rounded-t-lg"
+  >
+    <svg
+      class="h-6 w-6 inline-block"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></path>
+    </svg>
 
-        <svg class="h-6 w-6 inline-block" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"
-            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
-                stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
+    <h1 class="inline-block">Configurações do sistema</h1>
+  </div>
 
-        <h1 class="inline-block">Configurações do sistema</h1>
+  <h1
+    class="block font-medium pt-2 ml-2 border-b border-gray-200 rounded-t-lg dark:text-white dark:border-gray-600 h-max"
+  >
+    Ações do servidor
+  </h1>
 
-    </div>
+  <div class="grid grid-cols-4 gap-1 mb-4 pt-5 w-3/5 h-12 align-middle m-auto">
+    <button
+      class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700"
+    >
+      <p class="dark:text-gray-50 m-auto float-left">Reiniciar serviços</p>
+    </button>
+    <button
+      class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700"
+    >
+      <p class="dark:text-gray-50 m-auto float-left">Ver registros</p>
+    </button>
+    <button
+      class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700"
+    >
+      <p class="dark:text-gray-50 m-auto float-left">Formatar sistema</p>
+    </button>
+    <button
+      class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700"
+    >
+      <p class="dark:text-gray-50 m-auto float-left">Deletar dados</p>
+    </button>
+  </div>
 
-    <h1 class="block font-medium pt-2 ml-2 border-b border-gray-200 rounded-t-lg dark:text-white dark:border-gray-600 h-max">
-        Ações do servidor 
-    </h1>
+  <h1
+    class="block font-medium pt-2 ml-2 border-b border-gray-200 rounded-t-lg dark:text-white dark:border-gray-600 h-max"
+  >
+    Ações do sistema
+  </h1>
 
-    <div class="grid grid-cols-4 gap-1 mb-4 pt-5 w-3/5 h-12 align-middle m-auto">
-        <button class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700">
-
-            <p class="dark:text-gray-50 m-auto float-left">
-                Reiniciar serviços
-            </p>
-         
-        </button>
-        <button class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700">
-
-            <p class="dark:text-gray-50 m-auto float-left">
-                Ver registros
-            </p>
-         
-        </button>
-        <button class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700">
-
-            <p class="dark:text-gray-50 m-auto float-left">
-                Formatar sistema
-            </p>
-         
-        </button>
-        <button class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700">
-
-            <p class="dark:text-gray-50 m-auto float-left">
-                Deletar dados
-            </p>
-         
-        </button>
-    </div>
-
-    <h1 class="block font-medium pt-2 ml-2 border-b border-gray-200 rounded-t-lg dark:text-white dark:border-gray-600 h-max">
-        Ações do sistema 
-    </h1>
-
-    <div class="grid grid-cols-3 gap-1 mb-4 pt-5 w-3/5 h-12 align-middle m-auto">
-        <button class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700">
-
-            <p class="dark:text-gray-50 m-auto float-left">
-                Administração do sistema
-            </p>
-         
-        </button>
-        <button class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700">
-
-            <p class="dark:text-gray-50 m-auto float-left">
-                Exportar configurações
-            </p>
-         
-        </button>
-        <button class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700">
-
-            <p class="dark:text-gray-50 m-auto float-left">
-                Importar configurações
-            </p>
-         
-        </button>
-    </div>
+  <div class="grid grid-cols-3 gap-1 mb-4 pt-5 w-3/5 h-12 align-middle m-auto">
+    <button
+      class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700"
+    >
+      <p class="dark:text-gray-50 m-auto float-left">
+        Administração do sistema
+      </p>
+    </button>
+    <button
+      class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700"
+    >
+      <p class="dark:text-gray-50 m-auto float-left">Exportar configurações</p>
+    </button>
+    <button
+      class="flex flex-col h-12 items-center rounded bg-gray-50 dark:bg-gray-700"
+    >
+      <p class="dark:text-gray-50 m-auto float-left">Importar configurações</p>
+    </button>
+  </div>
 </div>
 
 {% endblock content %}

@@ -19,7 +19,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -105,8 +104,8 @@ DATABASES = {
     }
 }
 
-GRAFANAHOST = env('GRAFANAHOST')
-GRAFANAPORT= env('GRAFANAPORT')
+GRAFANA_HOST = env('GRAFANA_HOST')
+GRAFANA_PORT= env('GRAFANA_PORT')
 
 PROMETHEUS_HOST = env('PROMETHEUS_HOST')
 PROMETHEUS_PORT = env('PROMETHEUS_PORT')
@@ -133,9 +132,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = env('LANGUAGE_CODE')
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = env('TIMEZONE')
+TIME_ZONE = 'America/Chicago'
 
 USE_I18N = True
 

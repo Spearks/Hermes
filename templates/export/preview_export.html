@@ -1,10 +1,22 @@
-{% extends "_base.html" %}
-{% load tz %}
-{% block content %}
+{% extends "_base.html" %} {% load tz %} {% block content %}
 
-<div class="block font-medium mb-3 border-b border-gray-200 rounded-t-lg dark:text-white dark:border-gray-600 h-max" onclick="window.history.go(-1); return false;">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+<div
+  class="block font-medium mb-3 border-b border-gray-200 rounded-t-lg dark:text-white dark:border-gray-600 h-max"
+  onclick="window.history.go(-1); return false;"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    class="w-6 h-6"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+    />
   </svg>
   <p>Retornar</p>
 </div>
@@ -12,41 +24,44 @@
 <div id="datagrid-container"></div>
 
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
+  const urlParams = new URLSearchParams(window.location.search);
 
-    sheet = urlParams.get('sheet');
+  sheet = urlParams.get("sheet");
 
-    const fileUrl =  h_url + '/media/exported/' + sheet;
-    fetch(fileUrl)
-  .then(response => response.arrayBuffer())
-  .then(buffer => {
-    // Load the file data into SheetJS
-    const workbook = XLSX.read(buffer, { type: 'array' });
+  const fileUrl = h_url + "/media/exported/" + sheet;
+  fetch(fileUrl)
+    .then((response) => response.arrayBuffer())
+    .then((buffer) => {
+      // Load the file data into SheetJS
+      const workbook = XLSX.read(buffer, { type: "array" });
 
-    // Get the first sheet from the workbook
-    const sheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[sheetName];
+      // Get the first sheet from the workbook
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
 
-    // Convert the worksheet data to JSON format
-    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false });
+      // Convert the worksheet data to JSON format
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+        header: 1,
+        raw: false,
+      });
 
-    // Format the first column as string
-    const formattedData = jsonData.map(row => {
-      const formattedRow = [...row];
-      formattedRow[0] = String(formattedRow[0]); // Convert to string
-      return formattedRow;
+      // Format the first column as string
+      const formattedData = jsonData.map((row) => {
+        const formattedRow = [...row];
+        formattedRow[0] = String(formattedRow[0]); // Convert to string
+        return formattedRow;
+      });
+
+      // Limit the formattedData to 100 rows
+      const limitedData = formattedData.slice(0, 100);
+
+      // Get the reference to the datagrid container element
+      const container = document.getElementById("datagrid-container");
+
+      // Create a new instance of canvas-datagrid and render it in the container
+      const grid = new canvasDatagrid();
+      grid.data = limitedData;
+      container.appendChild(grid);
     });
-
-    // Limit the formattedData to 100 rows
-    const limitedData = formattedData.slice(0, 100);
-
-    // Get the reference to the datagrid container element
-    const container = document.getElementById('datagrid-container');
-
-    // Create a new instance of canvas-datagrid and render it in the container
-    const grid = new canvasDatagrid();
-    grid.data = limitedData;
-    container.appendChild(grid);
-  });
 </script>
 {% endblock content %}

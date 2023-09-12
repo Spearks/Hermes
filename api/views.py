@@ -1,12 +1,17 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from .serializers import ExportMultipleChannelsSerializer, Export
 from app.tasks import export_metric_data
 from prometheus_api_client.utils import parse_datetime
 from app.models import Channel
 import pandas as pd
 import json
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.core.management import call_command
 # Create your views here.
 
 def convert_to_export_objects(data_list):
@@ -20,6 +25,7 @@ def convert_to_export_objects(data_list):
         )
         export_objects.append(export_object)
     return export_objects
+
 
 class ExportChannelsView(viewsets.ViewSet):
     def create(self, request):
@@ -88,5 +94,12 @@ class ExportChannelsView(viewsets.ViewSet):
 
         return Response({"message": "Data received and processed successfully"}, status=status.HTTP_201_CREATED)
         
+class SystemActionsView(viewsets.ViewSet):
 
+    def create(self, request):
+
+        action = request.data.get('action')
+
+        if action == 'reload_grafana':
+            return Response({'message': 'Action reload_grafana executed'}, status=status.HTTP_200_OK)
 
