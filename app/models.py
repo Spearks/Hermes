@@ -15,7 +15,7 @@ class FileExportModel(models.Model):
     id = models.BigAutoField(primary_key=True)
     xlsx_file = models.FileField(upload_to='exported/')
     created_date = models.DateTimeField(auto_now_add=True)
-    lines = models.BigIntegerField()
+    lines = models.BigIntegerField(default=0)
 
     def filename(self):
         return os.path.basename(self.xlsx_file.name)

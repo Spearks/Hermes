@@ -50,30 +50,6 @@ Depois edite o arquivo .env
 
 #
 
-- [GRAFANA_TOKEN] Crie um token no Grafana, com o seguinte código:
-
-```python
-import requests
-# Caminho do Grafana
-url = 'http://localhost:3000/api/auth/keys'
-# Senha de administrador (que deve ser mudada)
-username = 'admin'
-password = 'admin'
-
-payload = {
-    'name': 'Admin token',
-    'role': 'Admin'
-}
-
-response = requests.post(url, json=payload, auth=(username, password))
-if response.status_code == 200:
-    token_data = response.json()
-    token = token_data['key']
-    print('Token criado:', token)
-else:
-    print('Erro:', response.text)
-```
-
 ### Configure os alvos
 
 Para configurar os alvos de aquisição, adicione um arquivo `.yml` em
@@ -101,6 +77,6 @@ npx tailwindcss -i static/src/input.css -o static/src/output.css --minify
 
 Por fim, para iniciar o projeto rode:
 
-```bash
+```bashp
 docker-compose up -d
 ```
