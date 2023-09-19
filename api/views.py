@@ -52,8 +52,6 @@ class ExportChannelsView(viewsets.ViewSet):
             dataByChannel[chid] = []
 
         for Export in serializer.data:
-            #if dataByChannel[Export['channelId']] == None: dataByChannel[Export['channelId']] = []
-
             interval = (parse_datetime(Export['time']), parse_datetime(Export['endtime']), int(Export['pmin']))
             
             channel = Channel.objects.get(pk=Export['channelId'])

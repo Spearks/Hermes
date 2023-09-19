@@ -17,7 +17,8 @@
       href="{% static 'assets/fonts/@fontsource/inter/index.css' %}"
     />
 
-    {% endcompress %} {% compress js inline %} 
+    {% endcompress %} 
+    {% compress js inline %} 
     {% if request.path == '/reports/preview' %}
     <script src="{% static 'scripts/node/canvas-datagrid.js' %}"></script>
     <script src="{% static 'scripts/node/xlsx.full.min.js' %}"></script>

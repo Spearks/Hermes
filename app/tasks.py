@@ -128,10 +128,10 @@ def update_dashboard():
         pretty_json = json.dumps(dashboard.to_json_data(), sort_keys=True, indent=2, cls=DashboardEncoder)
         
         api_key = env('GRAFANA_TOKEN')
-        server = env('GRAFANA_HOST') + env('GRAFANA_PORT')
+        server = env('GRAFANA_HOST') + ':' + env('GRAFANA_PORT')
 
         headers = {'Authorization': f"Bearer {api_key}", 'Content-Type': 'application/json'}
-        r = requests.post(f"http://{server}/api/dashboards/db", data=dashboard.to_json_data(), headers=headers, verify=True)
+        r = requests.post(f"http://{server}/api/admin/provisioning/dashboards/reload", auth=(env('GRAFANA_USER'), env('GRAFANA_PASSWORD')))
         print(f"{r.status_code} - {r.content}")
 
         with open(f'node/grafana/dashboards/Hermes/default{Device.id}.json', 'w') as f:
