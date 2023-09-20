@@ -164,6 +164,21 @@ function activateSelectListOnChannels() {
   });
 }
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 // TODO: fix it
 function exportChannelsOnMultipleView() {
   // Get all the form elements
@@ -199,13 +214,6 @@ function exportChannelsOnMultipleView() {
     urlParametersArray.push(formData);
   }
 
-  // const combinedParams = urlParametersArray
-  //   .map(data => Object.keys(data)
-  //     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-  //     .join('&')
-  //   )
-  //   .join('&'); // Join individual parameter strings
-
   const combinedParams = urlParametersArray.reduce((result, data) => {
     Object.keys(data).forEach((key) => {
       result[key] = data[key];
@@ -213,8 +221,69 @@ function exportChannelsOnMultipleView() {
     return result;
   }, {});
 
-  console.log(combinedParams);
-  console.log(urlParametersArray);
+  function renameProperties(obj) {
+    const renamedObj = {};
+    for (const [key, value] of Object.entries(obj)) {
+      switch (key) {
+        case 'time-f':
+          renamedObj['endtime'] = value;
+          break;
+        case 'current_channel':
+          renamedObj['channelId'] = value;
+          break;
+        default:
+          renamedObj[key] = value;
+          break;
+      }
+    }
+    return renamedObj;
+  }
+
+  // Create a new array with renamed properties
+  const newArray = urlParametersArray.map(obj => renameProperties(obj));
+  const jsonData = JSON.stringify(newArray);
+
+  const endpoint = h_url + '/api/v1/exportChannel/'
+  const csrftoken = getCookie('csrftoken');
+
+  // Define the headers for the request, including the CSRF token
+  const headers = {
+    'Content-Type': 'application/json',
+    'X-CSRFToken': csrftoken
+  };
+
+  console.log(jsonData)
+  // Send the data to the endpoint
+  fetch(endpoint, {
+    method: 'POST',
+    headers: headers,
+    body: jsonData
+  })
+    .then(response => response.json())
+    .then(data => {
+      
+      const filename = data.object
+
+      // Create a link element
+      const link = document.createElement('a');
+      console.log(filename)
+      link.href = h_url + '/media/exported/' +filename;
+
+      console.log(h_url + '/media/exported/' + filename)
+      link.download = h_url + '/media/exported/' + filename; // Set the filename you want
+  
+      // Append the link to the body
+      document.body.appendChild(link);
+  
+      // Programmatically trigger a click event on the link to start the download
+      link.click();
+  
+      // Remove the link from the DOM
+      document.body.removeChild(link);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
 
 function getAllInputChannels() {
