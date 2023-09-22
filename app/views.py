@@ -5,6 +5,7 @@ from .models import FileExportModel, Channel, DeviceModel
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound
+from hermes.settings import env
 # Create your views here.
 
 def home_view(request):
@@ -31,6 +32,7 @@ def devices_view(request, device):
     device = devices.get(id=device)
     exports = FileExportModel.objects.all().count
     channels = Channel.objects.all().filter(device=device)
+
     context = {
         "exports" : exports,
         "channels" : channels,
@@ -38,6 +40,8 @@ def devices_view(request, device):
         "current_device" : device,
         "current_channels" : channels,
         "current_path" : request.path,
+        "grafana_host" : env('GRAFANA_HOST'),
+        "grafana_port" : env('GRAFANA_PORT')
     }
 
     return render(request, "overview-channel.html", context)

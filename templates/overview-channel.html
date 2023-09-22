@@ -10,7 +10,7 @@
     <p
       class="block mb-2 mt-2 border-b border-gray-200 rounded-t-lg dark:text-white dark:border-gray-600 h-max"
     >
-      Estado do dispositivo
+      Estado do dispositivo 
     </p>
 
     <p
@@ -96,7 +96,7 @@
                       <div class="ml-2 float-right">
                         <input class="h-14 w-56 pb-1 blockbg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="datetime-local" value="{% now "Y-m-d" %}T{% now "G:i" %}" id="time" name="time">
                       </div>
-                      
+
                       <div class="float-right">
                           <input class="h-14 w-56 pb-1 block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="datetime-local" value="{% now "Y-m-d" %}T{% now "G:i" %}" id="time" name="time-f">
                       </div>
@@ -112,7 +112,7 @@
 
         // Open modal
         document.getElementById('open{{expr}}').addEventListener('click', function() {
-            const iframeSrc = 'http://localhost:3000/d-solo/{{ uid }}/{{ current_device.name}}?orgId=1&panelId={{ data.default.1 }}&refresh=5s&from=now-120s&to=now'; // Set your iframe source URL here
+            const iframeSrc = 'http://{{ grafana_host }}:{{ grafana_port }}/d-solo/{{ uid }}/{{ current_device.name}}?orgId=1&panelId={{ data.default.1 }}&refresh=5s&from=now-120s&to=now'; // Set your iframe source URL here
             modal.querySelector('iframe').setAttribute('src', iframeSrc);
         });
 
@@ -132,7 +132,7 @@
         <div
           id="toRemove{{ data.default.1 }}"
           class="text-center"
-          onclick="showGrafanaIframe('http://localhost:3000/d-solo/{{ uid }}/{{ current_device.name}}?orgId=1&amp;panelId={{ data.default.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv{{ data.default.1 }}', 'h-60', 'toRemove{{ data.default.1 }}'  )"
+          onclick="showGrafanaIframe('http://{{ grafana_host }}:{{ grafana_port }}/d-solo/{{ uid }}/{{ current_device.name}}?orgId=1&amp;panelId={{ data.default.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv{{ data.default.1 }}', 'h-60', 'toRemove{{ data.default.1 }}'  )"
         >
           <svg
             class="h-20 w-20 bg-gray-50 text-slate-50 dark:text-slate-600 dark:bg-slate-700 text-center"
@@ -169,7 +169,7 @@
       <div
         id="toRemove1{{ data.avg.1 }}"
         class="text-center m-auto"
-        onclick="showGrafanaIframe('http://localhost:3000/d-solo/{{ uid }}/new-dashboard?orgId=1&panelId={{ data.avg.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv1{{ data.avg.1 }}', 'h-20', 'toRemove1{{ data.avg.1 }}'  )"
+        onclick="showGrafanaIframe('http://{{ grafana_host }}:{{ grafana_port }}/d-solo/{{ uid }}/new-dashboard?orgId=1&panelId={{ data.avg.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv1{{ data.avg.1 }}', 'h-20', 'toRemove1{{ data.avg.1 }}'  )"
       >
         <svg
           class="h-5 w-5 bg-gray-50 text-slate-50 dark:text-slate-600 dark:bg-slate-700 text-center"
@@ -196,7 +196,7 @@
       <div
         id="toRemove2{{ data.max.1 }}"
         class="text-center m-auto"
-        onclick="showGrafanaIframe('http://localhost:3000/d-solo/{{ uid }}/new-dashboard?orgId=1&panelId={{ data.max.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv2{{ data.max.1 }}', 'h-20', 'toRemove2{{ data.max.1 }}'  )"
+        onclick="showGrafanaIframe('http://{{ grafana_host }}:{{ grafana_port }}/d-solo/{{ uid }}/new-dashboard?orgId=1&panelId={{ data.max.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv2{{ data.max.1 }}', 'h-20', 'toRemove2{{ data.max.1 }}'  )"
       >
         <svg
           class="h-5 w-5 bg-gray-50 text-slate-50 dark:text-slate-600 dark:bg-slate-700 text-center"
@@ -224,7 +224,7 @@
       <div
         id="toRemove3{{ data.min.1 }}"
         class="text-center m-auto"
-        onclick="showGrafanaIframe('http://localhost:3000/d-solo/{{ uid }}/new-dashboard?orgId=1&panelId={{ data.min.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv3{{ data.min.1 }}', 'h-20', 'toRemove3{{ data.min.1 }}'  )"
+        onclick="showGrafanaIframe('http://{{ grafana_host }}:{{ grafana_port }}/d-solo/{{ uid }}/new-dashboard?orgId=1&panelId={{ data.min.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now' , 'cv3{{ data.min.1 }}', 'h-20', 'toRemove3{{ data.min.1 }}'  )"
       >
         <svg
           class="h-5 w-5 bg-gray-50 text-slate-50 dark:text-slate-600 dark:bg-slate-700 text-center"
