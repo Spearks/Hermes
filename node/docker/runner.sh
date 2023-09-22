@@ -2,13 +2,6 @@
 
 poetry shell
     
-set -a 
-source .env
-
-sleep 15
-python /app/node/docker/setup.py 
-
-echo ${GRAFANA_TOKEN}
 
 python manage.py makemigrations --noinput
 python manage.py migrate --noinput

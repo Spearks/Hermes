@@ -91,9 +91,6 @@ services:
       - postgres:postgres
     networks:
       - hermes
-    extra_hosts:
-      - "postgres:127.0.0.1"
-
 
   celery:
     build:

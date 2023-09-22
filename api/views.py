@@ -3,7 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializers import ExportMultipleChannelsSerializer, Export
-from app.tasks import export_metric_data
+from .tasks import export_metric_data
 from prometheus_api_client.utils import parse_datetime
 from app.models import Channel, FileExportModel
 import pandas as pd

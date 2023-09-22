@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from .tasks import export_metric_data
 from celery.result import AsyncResult   
 from hermes.celery import app
 from .models import FileExportModel, Channel, DeviceModel
@@ -81,7 +80,6 @@ def sheet_preview(request):
 
 from prometheus_api_client.utils import parse_datetime
 from app.models import FileExportModel
-from .tasks import export_metric_data
 
 def channel_list_device(request, device): 
     devices = DeviceModel.objects.all()
@@ -135,36 +133,36 @@ def multiple_channels_export_view(request):
 
 
 def channel_export_endpoint(request):
-    if request.method == "GET":
-        time_values = request.GET.getlist('time')
-        time_f_values = request.GET.getlist('time-f')
-        pmin_values = request.GET.getlist('pmin')
-        channel = request.GET.get('channel')
+    # if request.method == "GET":
+    #     time_values = request.GET.getlist('time')
+    #     time_f_values = request.GET.getlist('time-f')
+    #     pmin_values = request.GET.getlist('pmin')
+    #     channel = request.GET.get('channel')
         
-        channel =  Channel.objects.get(pk=int(channel))
+    #     channel =  Channel.objects.get(pk=int(channel))
         
-        prometheus = channel.device.prefix + '_' + channel.prometheus_name
-        print(prometheus)
-        export = []
+    #     prometheus = channel.device.prefix + '_' + channel.prometheus_name
+    #     print(prometheus)
+    #     export = []
         
-        for i in range(0, len(time_values) ):
+    #     for i in range(0, len(time_values) ):
 
-            time_start = parse_datetime(time_values[i] ) 
-            time_end = parse_datetime(time_f_values[i] ) 
-            p_min = int(pmin_values[i])
+    #         time_start = parse_datetime(time_values[i] ) 
+    #         time_end = parse_datetime(time_f_values[i] ) 
+    #         p_min = int(pmin_values[i])
 
-            export.append( (time_start, time_end, p_min) )
+    #         export.append( (time_start, time_end, p_min) )
 
-        task = export_metric_data.delay(export, prometheus)
+    #     task = export_metric_data.delay(export, prometheus)
 
-        file_exports = FileExportModel.objects.order_by('-created_date')
+    #     file_exports = FileExportModel.objects.order_by('-created_date')
 
-        context = {
-            "files" : file_exports,
-            "error" : task.get()["message"] if task.get()["return"] == "Error" else None
-        }
+    #     context = {
+    #         "files" : file_exports,
+    #         "error" : task.get()["message"] if task.get()["return"] == "Error" else None
+    #     }
 
-        return render(request, "reports.html", context)
+    return render(request, "reports.html") #, context)
     
 @login_required()
 def admin_settings_view(request):

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sleep 1
+sleep 10
 
 poetry shell
     

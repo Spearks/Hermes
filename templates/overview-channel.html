@@ -64,7 +64,7 @@
         <p>{{ expr }}</p>
 
         <div class="w-10 h-10">
-          <button data-modal-target="m{{ expr }}" data-modal-toggle="m{{ expr }}" class="block text-white bg-blue-700 hover:bg-blue-800font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+          <button id="open{{expr}}" data-modal-target="m{{ expr }}" data-modal-toggle="m{{ expr }}" class="block text-white bg-blue-700 hover:bg-blue-800font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
             Expandir
           </button>
         </div>
@@ -78,7 +78,7 @@
                       <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                           Canal 
                       </h3>
-                      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
+                      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="m{{ expr }}">
                           <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                           </svg>
@@ -86,17 +86,43 @@
                       </button>
                   </div>
                   <!-- Modal body -->
-                  <div class="h-56 w-5xl w-full">
-                    <!-- <iframe class="h-56 w-5xl w-full" src="http://localhost:3000/d-solo/{{ uid }}/{{ current_device.name}}?orgId=1&amp;panelId={{ data.default.1 }}&amp;refresh=5s&amp;from=now-120s&amp;to=now" frameborder="0"></iframe> -->
+                  <div class="h-96 w-5xl w-full">
+                    <iframe id="if{{expr }}" class="h-full w-5xl w-full" src="" frameborder="0"></iframe>
                   </div>
                   <!-- Modal footer -->
-                  <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                      <button data-modal-hide="m{{ expr }}" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sair</button>
+                  <div class="flex p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                      <button id="c{{expr}}" data-modal-hide="m{{ expr }}" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sair</button>
+                      
+                      <div class="ml-2 float-right">
+                        <input class="h-14 w-56 pb-1 blockbg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="datetime-local" value="{% now "Y-m-d" %}T{% now "G:i" %}" id="time" name="time">
+                      </div>
+                      
+                      <div class="float-right">
+                          <input class="h-14 w-56 pb-1 block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="datetime-local" value="{% now "Y-m-d" %}T{% now "G:i" %}" id="time" name="time-f">
+                      </div>
                   </div>
               </div>
           </div>
       </div>
 
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const modal = document.getElementById('m{{ expr }}');
+          const modalClose = modal.querySelector('#c{{expr}}');
+
+        // Open modal
+        document.getElementById('open{{expr}}').addEventListener('click', function() {
+            const iframeSrc = 'http://localhost:3000/d-solo/{{ uid }}/{{ current_device.name}}?orgId=1&panelId={{ data.default.1 }}&refresh=5s&from=now-120s&to=now'; // Set your iframe source URL here
+            modal.querySelector('iframe').setAttribute('src', iframeSrc);
+        });
+
+        // Close modal
+        modalClose.addEventListener('click', function() {
+            modal.style.display = 'none';
+            modal.querySelector('#if{{expr}}').setAttribute('src', '');
+        });
+      });
+      </script>
 
       </div>
       <div

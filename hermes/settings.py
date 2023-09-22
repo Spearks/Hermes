@@ -65,7 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django_minify_html.middleware.MinifyHtmlMiddleware'
+    #'django_minify_html.middleware.MinifyHtmlMiddleware'
 ]
 
 ROOT_URLCONF = 'hermes.urls'
@@ -134,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -165,6 +165,7 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_TASK_RESULT_EXPIRES = 1800
 CELERY_RESULT_BACKEND = env('REDIS_CELERY_RESULT_BACKEND')
+CELERY_IMPORTS = ('api.tasks',)
 #CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 #CELERY_TASK_ALWAYS_EAGER = True
 
@@ -218,3 +219,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
+
+NOTEBOOK_ARGUMENTS = [
+    "--ip",
+    "0.0.0.0",
+    "--port",
+    "8888",
+    "--allow-root",
+    "--no-browser",
+]
