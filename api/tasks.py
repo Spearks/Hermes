@@ -8,16 +8,18 @@ from django.conf import settings
 import os 
 from django.core.files.base import File
 from hermes.settings import env
+import pytz
 
-prom = PrometheusConnect(url =f"http://{env('PROMETHEUS_HOST')}:{env('PROMETHEUS_PORT')}", disable_ssl=True)
+prom = PrometheusConnect(url =f"http://{env('PROMETHEUS_HOST').rstrip()}:{env('PROMETHEUS_PORT').rstrip()}", disable_ssl=True)
 
+TIMEZONE = pytz.timezone(env('TIMEZONE').rstrip()) 
 @app.task
 def export_metric_data(time_intervals, channel, return_only_data=False):
     data_list = []
 
     for start_time, end_time, resolution in time_intervals:
-        start_time = parse_datetime(start_time)
-        end_time = parse_datetime(end_time)
+        start_time = parse_datetime(start_time).astimezone(TIMEZONE)
+        end_time = parse_datetime(end_time).astimezone(TIMEZONE)
         resolution = str(60 / int(resolution))
  
         metric_data = prom.get_metric_range_data(metric_name=channel, start_time=start_time, end_time=end_time)
@@ -28,6 +30,7 @@ def export_metric_data(time_intervals, channel, return_only_data=False):
             df = pd.DataFrame(data.metric_values)
             df["ds"] = pd.to_datetime(df["ds"])
 
+            df["ds"] = df["ds"].dt.tz_localize('UTC').dt.tz_convert(TIMEZONE)
 
             df = df.set_index("ds")
 
@@ -59,7 +62,6 @@ def export_metric_data(time_intervals, channel, return_only_data=False):
         os.remove(temp_file_path)
 
         return {"return" : "Object", "message" : None, "code" : str(exported_data.id)}
-
         
     except ValueError as ve:
         

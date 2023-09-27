@@ -3,9 +3,9 @@ import requests
 from hermes.settings import env
 from app.models import Channel, DeviceModel
 
-GRAFANA_API_TOKEN=env('GRAFANA_TOKEN')
-GRAFANA_HOST=env('GRAFANA_HOST')
-GRAFANA_PORT=str(env('GRAFANA_PORT'))
+GRAFANA_API_TOKEN=env('GRAFANA_TOKEN').rstrip()
+GRAFANA_HOST=env('GRAFANA_HOST').rstrip()
+GRAFANA_PORT=str(env('GRAFANA_PORT')).rstrip()
 GRAFANA_API_URL=f"http://{GRAFANA_HOST}:{GRAFANA_PORT}"
 
 

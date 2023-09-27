@@ -11,7 +11,6 @@ def setup_env():
 
     if psswd == "admin":
         print("Warning: The password should not be the default one.")
-
     host = os.getenv('GRAFANA_HOST', 'grafana').rstrip()
     port = os.getenv('GRAFANA_PORT', '3000').rstrip()
 

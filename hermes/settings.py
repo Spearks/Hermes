@@ -23,11 +23,11 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY').rstrip()
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env('DEBUG').rstrip()
 
 ALLOWED_HOSTS = ["*"]
 
@@ -95,20 +95,19 @@ WSGI_APPLICATION = 'hermes.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',#'django_psdb_engine',
-        'NAME': env('PSQL_DB_NAME'),
-        'USER': env('PSQL_DB_USER'),
-        'PASSWORD': env('PSQL_DB_PASSWORD'),
-        'HOST': env('PSQL_DB_HOST'),
-        'PORT': env('PSQL_DB_PORT'),
-        #'OPTIONS': {'ssl': {'ca': env('MYSQL_ATTR_SSL_CA')}}
+        'NAME': env('PSQL_DB_NAME').rstrip(),
+        'USER': env('PSQL_DB_USER').rstrip(),
+        'PASSWORD': env('PSQL_DB_PASSWORD').rstrip(),
+        'HOST': env('PSQL_DB_HOST').rstrip(),
+        'PORT': env('PSQL_DB_PORT').rstrip(),
     }
 }
 
-GRAFANA_HOST = env('GRAFANA_HOST')
-GRAFANA_PORT= env('GRAFANA_PORT')
+GRAFANA_HOST = env('GRAFANA_HOST').rstrip()
+GRAFANA_PORT= env('GRAFANA_PORT').rstrip()
 
-PROMETHEUS_HOST = env('PROMETHEUS_HOST')
-PROMETHEUS_PORT = env('PROMETHEUS_PORT')
+PROMETHEUS_HOST = env('PROMETHEUS_HOST').rstrip()
+PROMETHEUS_PORT = env('PROMETHEUS_PORT').rstrip()
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -160,11 +159,11 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Celery Config
-CELERY_TIMEZONE = env('TIMEZONE')
+CELERY_TIMEZONE = env('TIMEZONE').rstrip()
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_TASK_RESULT_EXPIRES = 1800
-CELERY_RESULT_BACKEND = env('REDIS_CELERY_RESULT_BACKEND')
+CELERY_RESULT_BACKEND = env('REDIS_CELERY_RESULT_BACKEND').rstrip()
 CELERY_IMPORTS = ('api.tasks',)
 #CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 #CELERY_TASK_ALWAYS_EAGER = True
@@ -190,8 +189,8 @@ LOGOUT_REDIRECT_URL = "/"
 
 # Cache-ops config 
 CACHEOPS_REDIS = {
-    'host': env('REDIS_HOST'),
-    'port': env('REDIS_PORT'),       
+    'host': env('REDIS_HOST').rstrip(),
+    'port': env('REDIS_PORT').rstrip(),       
     'db': 3,           
 }
 

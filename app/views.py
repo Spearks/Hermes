@@ -6,7 +6,11 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound
 from hermes.settings import env
+from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
+from django.contrib import messages
 # Create your views here.
+
 
 def home_view(request):
     channels = Channel.objects.all().cache()
@@ -40,8 +44,8 @@ def devices_view(request, device):
         "current_device" : device,
         "current_channels" : channels,
         "current_path" : request.path,
-        "grafana_host" : env('GRAFANA_HOST'),
-        "grafana_port" : env('GRAFANA_PORT')
+        "grafana_host" : env('GRAFANA_HOST').rstrip(),
+        "grafana_port" : env('GRAFANA_PORT').rstrip()
     }
 
     return render(request, "overview-channel.html", context)
@@ -57,7 +61,6 @@ def devices_list_view(request):
 
 def channel_view(request, ch):
     channel = Channel.objects.all().filter(id=int(ch))
-    print(channel)
     context = {
         "channel" : channel[0]
     }

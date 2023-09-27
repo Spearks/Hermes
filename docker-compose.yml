@@ -13,7 +13,7 @@ services:
       - ./node/targets:/etc/prometheus/targets/
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
-    ports:
+    ports: 
       - 9090:9090
     hostname: prometheus
     networks:
@@ -21,12 +21,11 @@ services:
 
   pushgateway:
     image: prom/pushgateway
+    hostname: pushgateway
     ports:
       - 9091:9091
-    hostname: pushgateway
     networks:
       - hermes
-
   grafana:
     image: docker.io/grafana/grafana-enterprise:9.5.9
     volumes:
@@ -45,7 +44,7 @@ services:
 
     command:
       [
-        "cd /usr/share/grafana && echo 'grafana-cli admin reset-admin-password ${GRAFANA_PASSWORD}' > /home/grafana/exec.sh && chmod +x /home/grafana/exec.sh && sh /home/grafana/exec.sh  && /run.sh",
+        "cd /usr/share/grafana && grafana-cli admin reset-admin-password ${GRAFANA_PASSWORD} && /run.sh",
       ]
   nginx:
     image: nginx:stable-bullseye-perl
@@ -87,8 +86,6 @@ services:
       - prometheus
       - postgres
       - rabbitmq
-    links:
-      - postgres:postgres
     networks:
       - hermes
 

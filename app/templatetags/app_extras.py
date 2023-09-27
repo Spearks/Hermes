@@ -26,8 +26,7 @@ def mount_view_by_device(device):
     dashboard_data = get_panels_by_uid.delay(filtred_dasboard[0]['uid']).get()
 
     mount = return_panels_view.delay(dashboard_data, Device.id).get()
-    print(filtred_dasboard[0]['uid'])
-    
+
     return mount, filtred_dasboard[0]['uid']
     
 @register.filter
