@@ -15,5 +15,4 @@ EXPOSE 8000
 
 RUN ["chmod", "+x", "/app/node/docker/runner.sh"]
 
-CMD ["/bin/bash"]
 ENTRYPOINT ["/app/node/docker/runner.sh"]   

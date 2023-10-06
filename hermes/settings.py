@@ -29,8 +29,8 @@ SECRET_KEY = env('SECRET_KEY').rstrip()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG').rstrip()
 
-ALLOWED_HOSTS = ["*"]
-
+ALLOWED_HOSTS = env('ALLOWED_HOSTS').rstrip()
+CSRF_TRUSTED_ORIGINS = env('ALLOWED_HOSTS').rstrip()
 # Application definition
 
 INSTALLED_APPS = [
