@@ -23,9 +23,8 @@ def check_new_device(ip, known_devices):
         if device not in known_devices:
             print(f"New device connected: IP {device['ip']} with MAC {device['mac']}")
 
-# Example usage
 known_devices = []
-network_ip = "192.168.1.0/24"  # Change this to match your network
+network_ip = "192.168.1.1/24"  # Change this to match your network
 
 while True:
     check_new_device(network_ip, known_devices)
