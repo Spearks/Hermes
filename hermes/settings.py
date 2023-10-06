@@ -29,8 +29,29 @@ SECRET_KEY = env('SECRET_KEY').rstrip()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG').rstrip()
 
-ALLOWED_HOSTS = env('ALLOWED_HOSTS').rstrip()
-CSRF_TRUSTED_ORIGINS = env('ALLOWED_HOSTS').rstrip()
+ALLOWED_HOSTS = [env('ALLOWED_HOSTS').rstrip()]
+CSRF_TRUSTED_ORIGINS = [env('ALLOWED_HOSTS').rstrip()]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 # Application definition
 
 INSTALLED_APPS = [
