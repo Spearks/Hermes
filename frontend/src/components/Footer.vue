@@ -6,7 +6,7 @@
         copyright-message="All Rights Reserved."
       />
     </fwb-footer>
-  </template>
+</template>
   
   <script setup>
   import {

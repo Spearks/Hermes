@@ -13,12 +13,6 @@
           <fwb-navbar-link link="/about">
             <RouterLink to="/about">About</RouterLink>
           </fwb-navbar-link>
-          <fwb-navbar-link link="#">
-            Pricing
-          </fwb-navbar-link>
-          <fwb-navbar-link link="#">
-            Contact
-          </fwb-navbar-link>
         </fwb-navbar-collapse>
       </template>
     </fwb-navbar>
@@ -31,5 +25,5 @@ import {
     FwbNavbarLink,
     FwbNavbarLogo,
 } from 'flowbite-vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 </script>

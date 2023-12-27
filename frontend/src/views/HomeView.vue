@@ -18,16 +18,19 @@
   </div>
 </template>
 <script>
-import { Greet } from '../../wailsjs/go/backend/App';
+import { EntryConfig } from '../../wailsjs/go/backend/App';
+
+function CallEntryConfig() {
+  EntryConfig().then((res) => {
+    console.log(res)
+  })
+}
+EntryConfig()
+
 export default {
   name: 'HomeView',
-  components: {
-    Greet
-  },
-  setup() {
-    return {
-      Greet
-    }
+  created() {
+    
   }
 }
 
