@@ -5,7 +5,27 @@ import (
 	"os"
 	"path/filepath"
 	"os/exec"
+	"fmt"
 )
+
+func ReturnVerisons() Config {
+
+	grafanaVersion := os.Getenv("GRAFANA_VERSION")
+	grafanaFile := fmt.Sprintf("grafana-%s.windows-amd64", grafanaVersion) 
+	grafanaString := fmt.Sprintf("grafana-v%s", grafanaVersion)
+	
+
+	prometheusVersion := os.Getenv("PROMETHEUS_VERSION")
+	prometheusFile := fmt.Sprintf("prometheus-%s.windows-amd64", prometheusVersion)
+    
+	return Config {
+		GrafanaVersion: grafanaFile,
+		GrafanaDir: grafanaFile,
+		GrafanaString: grafanaString,
+		PrometheusVersion: prometheusVersion,
+		PrometheusFile: prometheusFile,
+	}
+}
 
 func RunGrafana() {
 	home, err := os.UserHomeDir()
@@ -13,7 +33,9 @@ func RunGrafana() {
 		log.Fatal(err)
 	}
 
-	grafanaHome := filepath.Join(home, ".hermes", "grafana", "grafana-v10.2.3")
+	loadedConfig := ReturnVerisons()
+
+	grafanaHome := filepath.Join(home, ".hermes", "grafana", loadedConfig.GrafanaString)
 	grafanaExec := filepath.Join(grafanaHome, "bin", "grafana.exe")
 
 	s := []string{"cmd.exe", "/C", "start", grafanaExec, "server", "-homepath", grafanaHome}
@@ -33,14 +55,13 @@ func RunPrometheus() {
 		log.Fatal(err)
 	}
 
-	// C:\Users\Ace\.hermes\prometheus\prometheus-2.45.2.windows-amd64
+	loadedConfig := ReturnVerisons()
 
-	prometheus := filepath.Join(home, ".hermes", "prometheus", "prometheus-2.45.2.windows-amd64", "prometheus.exe")
+	prometheus := filepath.Join(home, ".hermes", "prometheus", loadedConfig.PrometheusFile, "prometheus.exe")
 
 	s := []string{"cmd.exe", "/C", "start", prometheus}
 
 	cmd := exec.Command(s[0], s[1:]...)
-
 
 	log.Println(cmd)
 

@@ -1,3 +1,5 @@
+// Defines the functions that will run at runtime startup
+
 package backend
 
 import (
@@ -10,7 +12,45 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+    "fmt"
+    "github.com/joho/godotenv"
 )
+
+var LoadedConfig Config
+
+func (a *App) Startup(ctx context.Context) {
+	
+	log.Println("[STARTUP] Startup called!")
+	a.ctx = ctx
+
+    log.Println("[STARTUP] Checking for .config file!")
+    err := godotenv.Load(".config")
+
+    if err != nil {
+        log.Fatalf("[STARTUP] Error loading .config file: %v", err)
+        os.Exit(1)
+    }
+
+    // Return version config from .config file
+    LoadedConfig = ReturnVerisons()
+
+	log.Println("[STARTUP] Checking for Prometheus instance")
+	CheckAndInstallPrometheus(a)
+
+	log.Println("[STARTUP] Checking for Grafana instance")
+	CheckAndInstallGrafana(a)
+
+	log.Println("[STARTUP] Ask for config file")
+	AskForConfigFile(a)
+
+	log.Println("[STARTUP] Starting Grafana")
+	RunGrafana()
+
+	log.Println("[STARTUP] Starting Prometheus")
+	RunPrometheus()
+}
+
+
 
 func Unzip(src, dest string) error {
     r, err := zip.OpenReader(src)
@@ -65,10 +105,12 @@ func CheckAndInstallPrometheus(a *App) {
     prometheusDir := filepath.Join(home, ".hermes", "prometheus")
 
     if _, err := os.Stat(prometheusDir); os.IsNotExist(err) {
-        runtime.MessageDialog(a.ctx, runtime.MessageDialogOptions{Title: "Grafana setup", Message: "Prometheus not found. This is required for Hermes to work. Click 'OK' to install Prometheus"})
+        runtime.MessageDialog(a.ctx, runtime.MessageDialogOptions{Title: "Prometheus setup", Message: "Prometheus not found. This is required for Hermes to work. Click 'OK' to install Prometheus"})
         log.Println("[STARTUP] Prometheus not found, downloading...")
 
-        resp, err := http.Get("https://github.com/prometheus/prometheus/releases/download/v2.45.2/prometheus-2.45.2.windows-amd64.zip")
+        url := fmt.Sprintf("https://github.com/prometheus/prometheus/releases/download/v%v/%v.zip", LoadedConfig.PrometheusVersion, LoadedConfig.PrometheusFile)
+        log.Println(url)
+        resp, err := http.Get(url)
         if err != nil {
             log.Fatal(err)
         }
@@ -127,34 +169,7 @@ func CheckAndInstallGrafana(a *App) {
         if err != nil {
             log.Fatal(err)
         }
-
-		// log.Println("[STARTUP] Grafana installed! Purging pre-made provisioning files")
-		// provisioningDir := filepath.Join(grafanaDir, "grafana-v10.2.3", "conf", "provisioning")
-		// err = os.RemoveAll(provisioningDir)
-		// if err != nil {
-		// 	log.Fatal(err)
-		// }
-
-		// log.Println("[STARTUP] Provisioning directory purged")
 	} else {
 		log.Println("[STARTUP] Grafana already installed!")
 	}
-}
-
-func (a *App) Startup(ctx context.Context) {
-	
-	log.Println("[STARTUP] Startup called!")
-	a.ctx = ctx
-
-	log.Println("[STARTUP] Checking for Prometheus instance")
-	CheckAndInstallPrometheus(a)
-
-	log.Println("[STARTUP] Checking for Grafana instance")
-	CheckAndInstallGrafana(a)
-
-	log.Println("[STARTUP] Starting Grafana")
-	RunGrafana()
-
-	log.Println("[STARTUP] Starting Prometheus")
-	RunPrometheus()
 }
